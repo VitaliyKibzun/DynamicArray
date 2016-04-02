@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DynamicArray
 {
-    class DynamicArray<T>
+    class DynamicArray<T> : IDynamicArray<T>
     {
         private T[] dynamicArray;
         private int _capacity = 0;

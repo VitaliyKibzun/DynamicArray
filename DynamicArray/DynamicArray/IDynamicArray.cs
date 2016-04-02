@@ -12,7 +12,5 @@ namespace DynamicArray
         void Insert(T value);
         T Get(int position);
         void Remove(int position);
-        int Capacity();
-        int Size();
     }
 }
