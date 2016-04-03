@@ -12,6 +12,8 @@ namespace DynamicArray
         private int _capacity = 0;
         private int _size = 0;
         private int _position = 0;
+        private int _maxArraySize;
+        private string typeOfArray;
 
         public int Capacity
         {
@@ -31,28 +33,51 @@ namespace DynamicArray
             set { _position = value; }
         }
 
-        public DynamicArray()
+        public int MaxArraySize
         {
-            this.dynamicArray = new T[Capacity];
+            get { return _maxArraySize; }
+            set { _maxArraySize = value; }
+        }
+
+        public string TypeOfArray
+        {
+            get { return typeOfArray; }
+            set { typeOfArray = value; }
+        }
+
+        public DynamicArray(int maxArraySize)
+        {
+            dynamicArray = new T[Capacity];
+            MaxArraySize = maxArraySize;
+            TypeOfArray = "Dynamic Array";
         }
 
         public void Add(T value)
         {
-            if (Capacity == 0)
+
+            if (Size < MaxArraySize)
             {
-                Capacity = Size = 1;
-                dynamicArray = new T[Capacity];
-                dynamicArray[Position] = value;
+                if (Capacity == 0)
+                {
+                    Capacity = Size = 1;
+                    Position = 0;
+                    dynamicArray = new T[Capacity];
+                    dynamicArray[Position] = value;
+                }
+                else
+                {
+                    if (Size == Capacity)
+                    {
+                        EnlageArrayCapacity();
+                    }
+                    Position++;
+                    dynamicArray[Position] = value;
+                    Size++;
+                }
             }
             else
             {
-                if (Size == Capacity)
-                {
-                    EnlageArrayCapacity();
-                }
-                Position++;
-                dynamicArray[Position] = value;
-                Size++;
+                Console.WriteLine("{0} max size is {1}. Value {2} will not be added.", TypeOfArray, MaxArraySize, value);
             }
         }
 
@@ -69,43 +94,51 @@ namespace DynamicArray
 
         public void Insert(int insertPosition, T value)
         {
-            if (insertPosition >= 0 && insertPosition <= Size)
+            if (Size < MaxArraySize)
             {
-                if (Size == Capacity)
+                if (insertPosition >= 0 && insertPosition <= Size)
                 {
-                    EnlageArrayCapacity();
+                    if (Size == Capacity)
+                    {
+                        EnlageArrayCapacity();
+                    }
+
+                    if (insertPosition == Position + 1)
+                    {
+                        Add(value);
+                    }
+                    else
+                    {
+                        if (insertPosition <= Position)
+                        {
+                            T[] tempArray = dynamicArray;
+                            dynamicArray = new T[Capacity];
+
+                            for (int i = 0; i < insertPosition; i++)
+                            {
+                                dynamicArray[i] = tempArray[i];
+                            }
+
+                            dynamicArray[insertPosition] = value;
+                            Size++;
+
+                            for (int i = insertPosition + 1; i < Size + 1; i++)
+                            {
+                                dynamicArray[i] = tempArray[i - 1];
+                            }
+                            Position = Size;
+                        }
+                    }
                 }
 
-                if (insertPosition == Position+1)
-                {
-                    Add(value);
-                }
                 else
                 {
-                    if (insertPosition <= Position)
-                    {
-                        T[] tempArray = dynamicArray;
-                        dynamicArray = new T[Capacity];
-                        
-                        for (int i = 0; i < insertPosition; i++)
-                        {
-                            dynamicArray[i] = tempArray[i];
-                        }
-                        
-                        dynamicArray[insertPosition] = value;
-                        Size++;
-                        
-                        for (int i = insertPosition+1; i < Size+1; i++)
-                        {
-                            dynamicArray[i] = tempArray[i-1];
-                        }
-                        Position = Size;
-                    }
+                    Console.WriteLine("Inserting position is out of {0}'s size", TypeOfArray);
                 }
             }
             else
             {
-                Console.WriteLine("Inserting position is out of Array's size");
+                Console.WriteLine("{0} max size is {1}. Value {2} will not be added.", TypeOfArray, MaxArraySize, value);
             }
         }
 
@@ -143,12 +176,13 @@ namespace DynamicArray
             }
             else
             {
-                Console.WriteLine("Removing position is out of Array's size");
+                Console.WriteLine("Removing position is out of {0}'s size", TypeOfArray);
             }
         }
 
         public void PrintArray()
         {
+            Console.Write("{0}: ", TypeOfArray);
             for (int i = 0; i < Size; i++)
             {
                 Console.Write("{0} ", dynamicArray[i]);

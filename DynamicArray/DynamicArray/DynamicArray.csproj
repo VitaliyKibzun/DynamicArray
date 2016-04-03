@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DynamicArray.cs" />
+    <Compile Include="DynamicQueue.cs" />
+    <Compile Include="DynamicStack.cs" />
     <Compile Include="IDynamicArray.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

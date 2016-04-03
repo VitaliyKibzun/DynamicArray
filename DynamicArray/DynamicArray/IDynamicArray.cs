@@ -9,7 +9,7 @@ namespace DynamicArray
     interface IDynamicArray<T>
     {
         void Add(T value);
-        void Insert(T value);
+        void Insert(int insertPosition, T value);
         T Get(int position);
         void Remove(int position);
     }

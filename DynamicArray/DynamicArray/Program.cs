@@ -10,7 +10,9 @@ namespace DynamicArray
     {
         static void Main(string[] args)
         {
-            DynamicArray<int> array = new DynamicArray<int>();
+            DynamicArray<int> array = new DynamicArray<int>(6);
+            DynamicQueue<int> queue = new DynamicQueue<int>(3);
+            DynamicStack<int> stack = new DynamicStack<int>(4);
             array.Add(5);
             array.Add(6);
             array.Add(7);
@@ -32,6 +34,28 @@ namespace DynamicArray
             array.PrintArray();
             array.Remove(10);
             array.PrintArray();
+
+            Console.WriteLine();
+            queue.Dequeue();
+            queue.Enqueue(5);
+            queue.Enqueue(6);
+            queue.Enqueue(7);
+            queue.Enqueue(8);
+            queue.PrintArray();
+            queue.Dequeue();
+            queue.PrintArray();
+
+            Console.WriteLine();
+            stack.Pop();
+            stack.Push(10);
+            stack.Push(11);
+            stack.Push(12);
+            stack.Push(13);
+            stack.Push(14);
+            stack.PrintArray();
+            stack.Pop();
+            stack.PrintArray();
+
 
             Console.ReadKey();
         }
